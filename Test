@@ -1,0 +1,152 @@
+/*
+
+ * Scenario Description:
+ *  After long hours of focusing on complex architectural models, Emma feels exhausted and loses focus.
+ *  She decides to take a short break and enters the Smart Meditation Corner.
+ *  The system prompts her to sync her Apple Watch for real-time physiological data.
+ *  The Apple Watch (or an intermediary device) sends data via serial in JSON format, e.g.:
+ *    {"heartRate":75, "stressLevel":"moderate"}
+
+/*
+
+#include <Arduino.h>
+#include <ArduinoJson.h>  // For parsing JSON data
+
+// Built-in LED pin (most boards define LED_BUILTIN)
+const int statusLEDPin = LED_BUILTIN;
+
+// Physiological data threshold settings
+const int heartRateThreshold = 70;         // Threshold for Deep Focus Recovery Mode
+const int highHeartRateThreshold = 90;       // Threshold for Quick Relaxation Mode
+const char* stressLevelModerate = "moderate";
+const char* stressLevelHigh = "high";
+
+// Define recovery modes
+enum RecoveryMode { IDLE, DEEP_FOCUS_RECOVERY, QUICK_RELAXATION };
+RecoveryMode currentMode = IDLE;
+
+// Variables for LED blinking control
+unsigned long previousMillis = 0;
+const unsigned long blinkInterval = 200;  // LED blink interval (ms) for Quick Relaxation Mode
+
+// For tracking the last received data time (used for timeout handling)
+unsigned long lastDataTime = 0;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(statusLEDPin, OUTPUT);
+  digitalWrite(statusLEDPin, LOW);
+
+  Serial.println("System initialized. Please sync your Apple Watch for physiological data...");
+}
+
+// Function to send commands to TouchDesigner and output debug information
+void sendCommand(const char* cmd) {
+  Serial.print("Sending command: ");
+  Serial.println(cmd);
+  // In a real application, in addition to serial output, you might use other communication methods to send the command to TouchDesigner.
+}
+
+// Mode switching function; sends corresponding commands based on the new mode
+void updateMode(RecoveryMode newMode, int heartRate, const char* stressLevel) {
+  if (newMode != currentMode) {
+    currentMode = newMode;
+    switch (currentMode) {
+      case DEEP_FOCUS_RECOVERY:
+        sendCommand("CMD:DEEP_FOCUS_RECOVERY");
+        Serial.print("Activated Deep Focus Recovery Mode - Heart Rate: ");
+        Serial.print(heartRate);
+        Serial.print(", Stress Level: ");
+        Serial.println(stressLevel);
+        break;
+      case QUICK_RELAXATION:
+        sendCommand("CMD:QUICK_RELAXATION");
+        Serial.print("Activated Quick Relaxation Mode - Heart Rate: ");
+        Serial.print(heartRate);
+        Serial.print(", Stress Level: ");
+        Serial.println(stressLevel);
+        break;
+      case IDLE:
+        sendCommand("CMD:EXIT_MODE");
+        Serial.println("Exiting all modes, entering idle state.");
+        break;
+    }
+  }
+}
+
+// Process the received physiological data and update the mode accordingly
+void processPhysiologicalData(int heartRate, const char* stressLevel) {
+  // Priority: Quick Relaxation > Deep Focus Recovery > Idle
+  if (heartRate > highHeartRateThreshold && strcmp(stressLevel, stressLevelHigh) == 0) {
+    updateMode(QUICK_RELAXATION, heartRate, stressLevel);
+  }
+  else if (heartRate > heartRateThreshold && strcmp(stressLevel, stressLevelModerate) == 0) {
+    updateMode(DEEP_FOCUS_RECOVERY, heartRate, stressLevel);
+  }
+  else {
+    updateMode(IDLE, heartRate, stressLevel);
+  }
+}
+
+// Update the LED based on the current mode
+void updateLED() {
+  unsigned long currentMillis = millis();
+  switch (currentMode) {
+    case DEEP_FOCUS_RECOVERY:
+      // Deep Focus Recovery Mode: LED stays on continuously
+      digitalWrite(statusLEDPin, HIGH);
+      break;
+    case QUICK_RELAXATION:
+      // Quick Relaxation Mode: LED blinks rapidly
+      if (currentMillis - previousMillis >= blinkInterval) {
+        previousMillis = currentMillis;
+        // Toggle LED state
+        digitalWrite(statusLEDPin, !digitalRead(statusLEDPin));
+      }
+      break;
+    case IDLE:
+      // Idle state: LED is turned off
+      digitalWrite(statusLEDPin, LOW);
+      break;
+  }
+}
+
+void loop() {
+  // Check if there is serial data available (assuming a complete JSON string ending with a newline)
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    input.trim();
+    if (input.length() > 0) {
+      Serial.print("Received data: ");
+      Serial.println(input);
+      
+      StaticJsonDocument<200> doc;
+      DeserializationError error = deserializeJson(doc, input);
+      if (error) {
+        Serial.print("JSON parsing failed: ");
+        Serial.println(error.c_str());
+      }
+      else {
+        int heartRate = doc["heartRate"];
+        const char* stressLevel = doc["stressLevel"];
+        
+        // Process the received physiological data and update the mode
+        processPhysiologicalData(heartRate, stressLevel);
+        lastDataTime = millis();  // Update the last received time
+      }
+    }
+  }
+  
+  // Optional: Timeout handling - if no data is received for a long time, automatically exit the current mode.
+  if (millis() - lastDataTime > 30000) {  // For example, a 30-second timeout
+    if (currentMode != IDLE) {
+      updateMode(IDLE, 0, "");
+    }
+  }
+  
+  // Continuously update the LED display based on the current mode
+  updateLED();
+  
+  // Short delay to prevent excessive loop speed (does not affect LED blinking)
+  delay(50);
+}
