@@ -2,25 +2,25 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 
-// 修改为你自己的 WiFi 信息
+
 const char* ssid = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
 
-// 创建一个 HTTP 服务器，端口 80
+
 ESP8266WebServer server(80);
 
-// 模拟数据变量
+
 bool sessionActive = false;
-int heartRate = 75;       // 模拟心率数据
+int heartRate = 75;       
 String stressLevel = "Moderate";
-int breathingRate = 12;   // 模拟呼吸率数据
+int breathingRate = 12;   
 
 void handleRoot() {
   server.send(200, "text/plain", "Smart Meditation Corner - ESP8266");
 }
 
 void handleGetData() {
-  // 返回 JSON 格式的模拟数据
+  
   String jsonResponse = "{";
   jsonResponse += "\"heartRate\": " + String(heartRate) + ",";
   jsonResponse += "\"stressLevel\": \"" + stressLevel + "\",";
@@ -45,7 +45,7 @@ void setup() {
   delay(1000);
   Serial.println();
 
-  // 连接 WiFi
+  
   WiFi.begin(ssid, password);
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -57,18 +57,18 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  // 设置路由
+  
   server.on("/", handleRoot);
   server.on("/data", handleGetData);
   server.on("/startSession", handleStartSession);
   server.on("/endSession", handleEndSession);
 
-  // 启动服务器
+  
   server.begin();
   Serial.println("HTTP server started.");
 }
 
 void loop() {
   server.handleClient();
-  // 这里可以根据需要更新模拟数据，例如 heartRate = random(60, 100);
+  
 }
