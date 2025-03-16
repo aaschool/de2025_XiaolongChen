@@ -1,1 +1,17 @@
+Wi-Fi (IEEE 802.11):​
+Transfers data between the tablet and the Laptop Data Processing Center via HTTP/REST (JSON) requests.​
 
+DMX512:​
+Controls professional DMX lighting systems from the Arduino Microcontroller.​
+
+BLE (Bluetooth Low Energy):​
+Transmits real-time physiological data from the Apple Watch to the tablet.​
+
+USB Serial Communication:​
+Sends control commands from the Laptop to the Arduino Microcontroller.​
+
+HDMI:​
+Delivers high-definition visual content from the Laptop Data Processing Center to the projector.​
+
+​GPIO/PWM Signals：
+Controls LED ambient lighting and audio systems via the Arduino.
