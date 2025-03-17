@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adaptive Meditation Corner</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #f2f2f2;
+      color: #333;
+    }
+
+    header {
+      background: #fff;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-buttons button {
+      background: none;
+      border: 1px solid #888;
+      border-radius: 4px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-height: 400px;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .row {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .row span {
+      font-size: 1rem;
+    }
+
+    .large-text {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* Utility classes for hidden/visible sections */
+    .hidden {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      margin: 2rem 0;
+      color: #666;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Smart Meditation Corner</h1>
+    <div class="nav-buttons">
+      <button onclick="showSection('home')">Home</button>
+      <button onclick="showSection('health')">Apple Health</button>
+      <button onclick="showSection('session')">Meditation Pod</button>
+      <button onclick="showSection('complete')">Session Complete</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Home Section -->
+    <section id="homeSection" class="visible">
+      <p class="section-title">Home</p>
+      <div class="row">
+        <span>Welcome to your Adaptive Meditation Corner.</span>
+      </div>
+      <div class="row">
+        <span>Select an option from the top menu to begin.</span>
+      </div>
+    </section>
+
+    <!-- Apple Health Connect Section -->
+    <section id="healthSection" class="hidden">
+      <p class="section-title">Apple Health Connect</p>
+      <div class="row">
+        <span>Synchronizing Emma's Data...</span>
+      </div>
+      <div class="row">
+        <span>Heart Rate: <span id="heartRate1">-- BPM</span></span>
+      </div>
+      <div class="row">
+        <span>Stress Level: <span id="stressLevel1">--</span></span>
+      </div>
+      <div class="row">
+        <span>Breathing Rate: <span id="breathing1">-- BPM</span></span>
+      </div>
+      <div class="row">
+        <button onclick="simulateHealthData()">Sync Health Data</button>
+      </div>
+    </section>
+
+    <!-- Meditation Session Section -->
+    <section id="sessionSection" class="hidden">
+      <p class="section-title">Sitting with Meditation Pod</p>
+      <div class="row">
+        <span>Wasi: Water Hue Animation</span>
+      </div>
+      <div class="row">
+        <span>Heart Rate: <span id="heartRate2">-- BPM</span></span>
+      </div>
+      <div class="row">
+        <span>Stress Level: <span id="stressLevel2">--</span></span>
+      </div>
+      <div class="row">
+        <span>Breathing Rate: <span id="breathing2">-- BPM</span></span>
+      </div>
+      <div class="row">
+        <span>Sound Level: Moderate → Lowering</span>
+      </div>
+      <div class="row">
+        <span>Lighting: Faded</span>
+      </div>
+      <div class="row">
+        <button onclick="simulateSessionData()">Refresh Data</button>
+        <button onclick="alert('Session Ended')">End Session</button>
+      </div>
+    </section>
+
+    <!-- Session Complete Section -->
+    <section id="completeSection" class="hidden">
+      <p class="section-title">Session Complete!</p>
+      <div class="row">
+        <span>Heart Rate: <span id="heartRate3">-- BPM</span> → Lower</span>
+      </div>
+      <div class="row">
+        <span>Stress Level: Moderate → Low</span>
+      </div>
+      <div class="row">
+        <span>Breathing Rate: <span id="breathing3">-- BPM</span></span>
+      </div>
+      <div class="row">
+        <span>Tips: Slow pulses, extended breathing</span>
+      </div>
+      <div class="row">
+        <button onclick="simulateCompleteData()">Check Final Data</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Adaptive Meditation Corner
+  </footer>
+
+  <script>
+    // Function to switch between sections
+    function showSection(sectionId) {
+      const sections = ['homeSection','healthSection','sessionSection','completeSection'];
+      sections.forEach(sec => {
+        document.getElementById(sec).classList.add('hidden');
+      });
+      document.getElementById(sectionId + 'Section').classList.remove('hidden');
+    }
+
+    // Simulate Apple Health Data Sync
+    function simulateHealthData() {
+      // Example: random generation
+      const heartRate = Math.floor(Math.random() * 40) + 60;   // 60-100
+      const stressLevel = ['Low','Moderate','High'][Math.floor(Math.random() * 3)];
+      const breathing = Math.floor(Math.random() * 6) + 12;    // 12-18
+
+      document.getElementById('heartRate1').innerText = heartRate + ' BPM';
+      document.getElementById('stressLevel1').innerText = stressLevel;
+      document.getElementById('breathing1').innerText = breathing + ' BPM';
+    }
+
+    // Simulate Meditation Session Data
+    function simulateSessionData() {
+      const heartRate = Math.floor(Math.random() * 40) + 60;   
+      const stressLevel = ['Low','Moderate','High'][Math.floor(Math.random() * 3)];
+      const breathing = Math.floor(Math.random() * 6) + 12;    
+
+      document.getElementById('heartRate2').innerText = heartRate + ' BPM';
+      document.getElementById('stressLevel2').innerText = stressLevel;
+      document.getElementById('breathing2').innerText = breathing + ' BPM';
+    }
+
+    // Simulate Final Data after Session Complete
+    function simulateCompleteData() {
+      const heartRate = Math.floor(Math.random() * 40) + 60;   
+      const breathing = Math.floor(Math.random() * 6) + 12;    
+
+      document.getElementById('heartRate3').innerText = heartRate + ' BPM';
+      document.getElementById('breathing3').innerText = breathing + ' BPM';
+    }
+  </script>
+</body>
+</html>
