@@ -3,7 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Adaptive Meditation Corner</title>
+  <title>Adaptive Meditation Corner + p5 + Modbuttons</title>
+
+  <!-- p5.js library from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+
+  <!-- p5.modbuttons.js: your Modbuttons code -->
+  <script>
+    // === BEGIN p5.modbuttons.js ===
+    // Copy your entire Modbuttons code here (the code from "7vector's button system V2").
+    // For clarity, it's truncated in this example:
+    
+    // 7vector's button system V2
+    // ...
+    // [INSERT YOUR MODBUTTONS CODE HERE IN FULL]
+    // ...
+    
+    p5.prototype.registerMethod("post", p5.prototype.updateButtons);
+    // === END p5.modbuttons.js ===
+  </script>
+
   <style>
     /* Basic Reset */
     * {
@@ -11,260 +30,181 @@
       padding: 0;
       box-sizing: border-box;
     }
-
-    /* Body & Global Styles */
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #c8e6c9 0%, #b2ebf2 50%, #b3e5fc 100%);
+      font-family: sans-serif;
+      background: #f2f2f2;
       color: #333;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
-
-    /* Header & Navigation */
     header {
-      background: #ffffffaa;
-      backdrop-filter: blur(4px);
-      padding: 1rem 2rem;
-      border-bottom: 2px solid #9ccc65;
+      background: #fff;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 10;
     }
-
-    .logo {
-      font-size: 1.8rem;
-      color: #388e3c;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    header h1 {
+      font-size: 1.25rem;
     }
-
-    nav {
-      display: flex;
-      align-items: center;
-    }
-
-    nav ul {
-      list-style: none;
+    .nav-buttons {
       display: flex;
       gap: 1rem;
     }
-
-    nav ul li {
-      position: relative;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: #333;
-      font-size: 1rem;
-      padding: 0.5rem 0.75rem;
+    .nav-buttons button {
+      background: none;
+      border: 1px solid #888;
       border-radius: 4px;
-      transition: background 0.3s, color 0.3s;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
     }
-
-    nav ul li a:hover {
-      background: #c5e1a5;
-      color: #2e7d32;
-    }
-
-    /* Main Container */
     .container {
-      max-width: 900px;
-      width: 100%;
+      max-width: 800px;
       margin: 2rem auto;
       background: #fff;
-      padding: 1.5rem 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      flex: 1; /* allow footer to stick to bottom if content is short */
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-height: 400px;
+      flex: 1; /* push footer to bottom if there's little content */
     }
-
     .section-title {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
       font-weight: bold;
-      color: #388e3c;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
-
     .row {
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .row span {
-      font-size: 1.1rem;
-      line-height: 1.5;
-    }
-
-    .quote {
-      font-style: italic;
-      font-size: 1.05rem;
-      color: #555;
-      margin: 1rem 0;
-    }
-
-    .cta-button {
-      background: #aed581;
-      border: none;
-      border-radius: 6px;
-      padding: 0.6rem 1rem;
-      cursor: pointer;
       font-size: 1rem;
-      transition: background 0.3s, transform 0.3s;
     }
-
-    .cta-button:hover {
-      background: #9ccc65;
-      transform: translateY(-1px);
-    }
-
-    /* Utility classes for visibility */
     .hidden {
       display: none;
     }
     .visible {
       display: block;
     }
-
-    /* Footer */
     footer {
       text-align: center;
-      padding: 1rem 0;
+      margin: 2rem 0;
       color: #666;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">🌿 Smart Meditation</div>
-    <nav>
-      <ul>
-        <li><a href="#" onclick="showSection('home')">Home 🏠</a></li>
-        <li><a href="#" onclick="showSection('health')">Apple Health 🍎</a></li>
-        <li><a href="#" onclick="showSection('session')">Meditation Pod 🧘</a></li>
-        <li><a href="#" onclick="showSection('complete')">Session Complete ✅</a></li>
-        <li><a href="#" onclick="alert('Learn more about our mission!')">About ℹ️</a></li>
-      </ul>
-    </nav>
+    <h1>Smart Meditation Corner</h1>
+    <div class="nav-buttons">
+      <button onclick="showSection('home')">Home</button>
+      <button onclick="showSection('health')">Apple Health</button>
+      <button onclick="showSection('session')">Meditation Pod</button>
+      <button onclick="showSection('complete')">Session Complete</button>
+    </div>
   </header>
 
   <main class="container">
+
     <!-- Home Section -->
     <section id="homeSection" class="visible">
-      <p class="section-title">Welcome Home <span>😊</span></p>
+      <p class="section-title">Home</p>
       <div class="row">
-        <span>
-          Welcome to your <strong>Adaptive Meditation Corner</strong>. 
-          Take a deep breath and start your journey to relaxation.
-        </span>
+        <span>Welcome to your Adaptive Meditation Corner.</span>
       </div>
       <div class="row">
-        <span>
-          Use the menu above to explore health data, start a meditation session, 
-          or view your session summary.
-        </span>
-      </div>
-      <div class="quote">
-        "Within you there is a stillness and a sanctuary to which you can retreat at any time and be yourself."
-        <br>— Hermann Hesse
-      </div>
-      <div class="row" style="justify-content: flex-start;">
-        <button class="cta-button" onclick="alert('Getting started with your first session!')">
-          Get Started
-        </button>
+        <span>Select an option from the top menu to begin.</span>
       </div>
     </section>
 
     <!-- Apple Health Connect Section -->
     <section id="healthSection" class="hidden">
-      <p class="section-title">Apple Health Connect 🍎</p>
+      <p class="section-title">Apple Health Connect</p>
       <div class="row">
-        <span>Synchronizing your health data... ⏳</span>
+        <span>Synchronizing Emma's Data...</span>
       </div>
       <div class="row">
-        <span>Heart Rate: <span id="heartRate1">-- BPM</span> 💓</span>
+        <span>Heart Rate: <span id="heartRate1">-- BPM</span></span>
       </div>
       <div class="row">
-        <span>Stress Level: <span id="stressLevel1">--</span> 😟</span>
+        <span>Stress Level: <span id="stressLevel1">--</span></span>
       </div>
       <div class="row">
-        <span>Breathing Rate: <span id="breathing1">-- BPM</span> 🌬️</span>
+        <span>Breathing Rate: <span id="breathing1">-- BPM</span></span>
       </div>
-      <div class="row" style="justify-content: flex-start;">
-        <button class="cta-button" onclick="simulateHealthData()">Sync Health Data</button>
+      <div class="row">
+        <button onclick="simulateHealthData()">Sync Health Data</button>
       </div>
     </section>
 
     <!-- Meditation Session Section -->
     <section id="sessionSection" class="hidden">
-      <p class="section-title">Meditation Pod 🧘</p>
+      <p class="section-title">Sitting with Meditation Pod</p>
       <div class="row">
-        <span>Visual: Water Hue Animation 💧</span>
+        <span>Wasi: Water Hue Animation</span>
       </div>
       <div class="row">
-        <span>Heart Rate: <span id="heartRate2">-- BPM</span> 💖</span>
+        <span>Heart Rate: <span id="heartRate2">-- BPM</span></span>
       </div>
       <div class="row">
-        <span>Stress Level: <span id="stressLevel2">--</span> 😌</span>
+        <span>Stress Level: <span id="stressLevel2">--</span></span>
       </div>
       <div class="row">
-        <span>Breathing Rate: <span id="breathing2">-- BPM</span> 🌿</span>
+        <span>Breathing Rate: <span id="breathing2">-- BPM</span></span>
       </div>
       <div class="row">
-        <span>Sound Level: Moderate → Lowering 🔊</span>
+        <span>Sound Level: Moderate → Lowering</span>
       </div>
       <div class="row">
-        <span>Lighting: Faded 🌙</span>
+        <span>Lighting: Faded</span>
       </div>
-      <div class="row" style="justify-content: flex-start;">
-        <button class="cta-button" onclick="simulateSessionData()">Refresh Data</button>
-        <button class="cta-button" style="margin-left: 1rem;" onclick="alert('Session Ended. Thank you! 😊')">
-          End Session
-        </button>
+      <div class="row">
+        <button onclick="simulateSessionData()">Refresh Data</button>
+        <button onclick="alert('Session Ended')">End Session</button>
+      </div>
+
+      <!-- p5 Canvas for custom buttons or visuals -->
+      <div style="margin-top: 2rem;">
+        <p class="section-title">Interactive Canvas (p5 + Modbuttons)</p>
+        <div id="p5-canvas"></div>
       </div>
     </section>
 
     <!-- Session Complete Section -->
     <section id="completeSection" class="hidden">
-      <p class="section-title">Session Complete! 🎉</p>
+      <p class="section-title">Session Complete!</p>
       <div class="row">
-        <span>Heart Rate: <span id="heartRate3">-- BPM</span> → Lower 💗</span>
+        <span>Heart Rate: <span id="heartRate3">-- BPM</span> → Lower</span>
       </div>
       <div class="row">
-        <span>Stress Level: Moderate → Low 😌</span>
+        <span>Stress Level: Moderate → Low</span>
       </div>
       <div class="row">
-        <span>Breathing Rate: <span id="breathing3">-- BPM</span> 🌬️</span>
+        <span>Breathing Rate: <span id="breathing3">-- BPM</span></span>
       </div>
       <div class="row">
-        <span>Tips: Slow pulses, extended breathing 🧘‍♂️</span>
+        <span>Tips: Slow pulses, extended breathing</span>
       </div>
-      <div class="row" style="justify-content: flex-start;">
-        <button class="cta-button" onclick="simulateCompleteData()">Check Final Data</button>
+      <div class="row">
+        <button onclick="simulateCompleteData()">Check Final Data</button>
       </div>
     </section>
+
   </main>
 
   <footer>
-    &copy; 2025 Adaptive Meditation Corner. All rights reserved.
+    &copy; 2025 Adaptive Meditation Corner
   </footer>
 
+  <!-- Your custom script: integrates existing logic + p5 sketch using Modbuttons -->
   <script>
-    // Switch between sections
+    // Existing show/hide section logic
     function showSection(sectionId) {
       const sections = ['homeSection','healthSection','sessionSection','completeSection'];
       sections.forEach(sec => {
@@ -273,18 +213,16 @@
       document.getElementById(sectionId + 'Section').classList.remove('hidden');
     }
 
-    // Simulate Apple Health Data Sync
+    // Existing simulate data functions
     function simulateHealthData() {
-      const heartRate = Math.floor(Math.random() * 40) + 60; // 60-100
+      const heartRate = Math.floor(Math.random() * 40) + 60;   // 60-100
       const stressLevel = ['Low','Moderate','High'][Math.floor(Math.random() * 3)];
-      const breathing = Math.floor(Math.random() * 6) + 12;  // 12-18
+      const breathing = Math.floor(Math.random() * 6) + 12;    // 12-18
 
       document.getElementById('heartRate1').innerText = heartRate + ' BPM';
       document.getElementById('stressLevel1').innerText = stressLevel;
       document.getElementById('breathing1').innerText = breathing + ' BPM';
     }
-
-    // Simulate Meditation Session Data
     function simulateSessionData() {
       const heartRate = Math.floor(Math.random() * 40) + 60;   
       const stressLevel = ['Low','Moderate','High'][Math.floor(Math.random() * 3)];
@@ -294,14 +232,56 @@
       document.getElementById('stressLevel2').innerText = stressLevel;
       document.getElementById('breathing2').innerText = breathing + ' BPM';
     }
-
-    // Simulate Final Data after Session Complete
     function simulateCompleteData() {
       const heartRate = Math.floor(Math.random() * 40) + 60;   
       const breathing = Math.floor(Math.random() * 6) + 12;    
 
       document.getElementById('heartRate3').innerText = heartRate + ' BPM';
       document.getElementById('breathing3').innerText = breathing + ' BPM';
+    }
+
+    // p5.js sketch: using the Modbuttons library
+    let boxButton;
+
+    function setup() {
+      // Create a canvas and attach it to the div in "Meditation Session" section
+      const canvas = createCanvas(400, 200);
+      canvas.parent("p5-canvas");
+
+      // Example: create a box button at position (50, 50)
+      boxButton = new Button("BOX", 50, 50);
+      boxButton.width = 120;
+      boxButton.height = 50;
+
+      // Customize the button's appearance
+      boxButton.fill = [173, 216, 230];   // lightblue
+      boxButton.stroke = [70, 130, 180];  // steelblue
+      boxButton.strokeWeight = 2;
+
+      // Example event hooks
+      boxButton.onHover = function() {
+        // Maybe change fill on hover
+        this.fill = [135, 206, 235]; // skyblue
+      };
+      boxButton.onHoverEnd = function() {
+        this.fill = [173, 216, 230];
+      };
+      boxButton.onPressBegin = function() {
+        console.log("Box button pressed!");
+        alert("Box Button: Meditation started!");
+      };
+    }
+
+    function draw() {
+      background(240);
+
+      // You can add other p5 elements here
+      fill(0);
+      textSize(16);
+      text("Modbuttons Demo:", 50, 30);
+
+      // updateButtons() is provided by the Modbuttons library
+      updateButtons();
     }
   </script>
 </body>
