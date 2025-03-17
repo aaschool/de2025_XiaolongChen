@@ -11,94 +11,125 @@
       padding: 0;
       box-sizing: border-box;
     }
+
+    /* Body & Global Styles */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f2f2f2;
+      background: linear-gradient(135deg, #c8e6c9 0%, #b2ebf2 50%, #b3e5fc 100%);
       color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+
+    /* Header & Navigation */
     header {
-      background: #fff;
+      background: #ffffffaa;
+      backdrop-filter: blur(4px);
       padding: 1rem 2rem;
-      border-bottom: 2px solid #c5e1a5;
+      border-bottom: 2px solid #9ccc65;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
+
     .logo {
       font-size: 1.8rem;
       color: #388e3c;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+
     nav {
       display: flex;
       align-items: center;
     }
+
     nav ul {
       list-style: none;
       display: flex;
+      gap: 1rem;
     }
+
     nav ul li {
       position: relative;
-      margin-right: 1.5rem;
     }
+
     nav ul li a {
       text-decoration: none;
       color: #333;
-      padding: 0.5rem 0;
-      transition: color 0.3s;
-    }
-    nav ul li a:hover {
-      color: #388e3c;
-    }
-    /* Dropdown Menu Styles */
-    nav ul li .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #fff;
-      border: 1px solid #ddd;
+      font-size: 1rem;
+      padding: 0.5rem 0.75rem;
       border-radius: 4px;
-      min-width: 150px;
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s, color 0.3s;
     }
-    nav ul li .dropdown-content a {
-      display: block;
-      padding: 0.5rem 1rem;
-      color: #333;
-      text-decoration: none;
+
+    nav ul li a:hover {
+      background: #c5e1a5;
+      color: #2e7d32;
     }
-    nav ul li .dropdown-content a:hover {
-      background: #f2f2f2;
-    }
-    nav ul li:hover .dropdown-content {
-      display: block;
-    }
+
+    /* Main Container */
     .container {
-      max-width: 800px;
+      max-width: 900px;
+      width: 100%;
       margin: 2rem auto;
       background: #fff;
       padding: 1.5rem 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      min-height: 450px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex: 1; /* allow footer to stick to bottom if content is short */
     }
+
     .section-title {
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
       font-weight: bold;
       color: #388e3c;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+
     .row {
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
+
     .row span {
       font-size: 1.1rem;
+      line-height: 1.5;
     }
+
+    .quote {
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #555;
+      margin: 1rem 0;
+    }
+
+    .cta-button {
+      background: #aed581;
+      border: none;
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .cta-button:hover {
+      background: #9ccc65;
+      transform: translateY(-1px);
+    }
+
     /* Utility classes for visibility */
     .hidden {
       display: none;
@@ -106,65 +137,27 @@
     .visible {
       display: block;
     }
+
+    /* Footer */
     footer {
       text-align: center;
-      margin: 2rem 0;
+      padding: 1rem 0;
       color: #666;
       font-size: 0.9rem;
-    }
-    /* Responsive Navigation */
-    @media(max-width: 768px) {
-      nav ul {
-        flex-direction: column;
-      }
-      nav ul li {
-        margin-right: 0;
-        margin-bottom: 0.5rem;
-      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">Smart Meditation Corner 😌</div>
+    <div class="logo">🌿 Smart Meditation</div>
     <nav>
       <ul>
-        <li>
-          <a href="#" onclick="showSection('home')">Home 🏠</a>
-          <div class="dropdown-content">
-            <a href="#" onclick="showSection('home')">Welcome</a>
-            <a href="#" onclick="alert('Explore our features and get started!')">Overview</a>
-          </div>
-        </li>
-        <li>
-          <a href="#" onclick="showSection('health')">Apple Health 🍎</a>
-          <div class="dropdown-content">
-            <a href="#" onclick="simulateHealthData()">Sync Data</a>
-            <a href="#" onclick="alert('View health history (coming soon)!')">History</a>
-          </div>
-        </li>
-        <li>
-          <a href="#" onclick="showSection('session')">Meditation Pod 🧘</a>
-          <div class="dropdown-content">
-            <a href="#" onclick="alert('Start a new session!')">Start Session</a>
-            <a href="#" onclick="alert('Configure session settings (coming soon)!')">Settings</a>
-          </div>
-        </li>
-        <li>
-          <a href="#" onclick="showSection('complete')">Session Complete ✅</a>
-          <div class="dropdown-content">
-            <a href="#" onclick="alert('View session summary!')">Summary</a>
-            <a href="#" onclick="alert('Export session report (coming soon)!')">Export Report</a>
-          </div>
-        </li>
-        <li>
-          <a href="#" onclick="alert('Learn more about our mission!')">About ℹ️</a>
-          <div class="dropdown-content">
-            <a href="#" onclick="alert('Our Mission: To bring calm and focus to your day.')">Our Mission</a>
-            <a href="#" onclick="alert('Contact us at info@example.com')">Contact Us</a>
-          </div>
-        </li>
+        <li><a href="#" onclick="showSection('home')">Home 🏠</a></li>
+        <li><a href="#" onclick="showSection('health')">Apple Health 🍎</a></li>
+        <li><a href="#" onclick="showSection('session')">Meditation Pod 🧘</a></li>
+        <li><a href="#" onclick="showSection('complete')">Session Complete ✅</a></li>
+        <li><a href="#" onclick="alert('Learn more about our mission!')">About ℹ️</a></li>
       </ul>
     </nav>
   </header>
@@ -172,12 +165,27 @@
   <main class="container">
     <!-- Home Section -->
     <section id="homeSection" class="visible">
-      <p class="section-title">Welcome Home 😊</p>
+      <p class="section-title">Welcome Home <span>😊</span></p>
       <div class="row">
-        <span>Welcome to your Adaptive Meditation Corner. Take a deep breath and start your journey to relaxation.</span>
+        <span>
+          Welcome to your <strong>Adaptive Meditation Corner</strong>. 
+          Take a deep breath and start your journey to relaxation.
+        </span>
       </div>
       <div class="row">
-        <span>Use the menu above to explore health data, start a meditation session, or view your session summary.</span>
+        <span>
+          Use the menu above to explore health data, start a meditation session, 
+          or view your session summary.
+        </span>
+      </div>
+      <div class="quote">
+        "Within you there is a stillness and a sanctuary to which you can retreat at any time and be yourself."
+        <br>— Hermann Hesse
+      </div>
+      <div class="row" style="justify-content: flex-start;">
+        <button class="cta-button" onclick="alert('Getting started with your first session!')">
+          Get Started
+        </button>
       </div>
     </section>
 
@@ -195,6 +203,9 @@
       </div>
       <div class="row">
         <span>Breathing Rate: <span id="breathing1">-- BPM</span> 🌬️</span>
+      </div>
+      <div class="row" style="justify-content: flex-start;">
+        <button class="cta-button" onclick="simulateHealthData()">Sync Health Data</button>
       </div>
     </section>
 
@@ -219,9 +230,11 @@
       <div class="row">
         <span>Lighting: Faded 🌙</span>
       </div>
-      <div class="row">
-        <button onclick="simulateSessionData()">🔄 Refresh Data</button>
-        <button onclick="alert('Session Ended. Thank you! 😊')">🚪 End Session</button>
+      <div class="row" style="justify-content: flex-start;">
+        <button class="cta-button" onclick="simulateSessionData()">Refresh Data</button>
+        <button class="cta-button" style="margin-left: 1rem;" onclick="alert('Session Ended. Thank you! 😊')">
+          End Session
+        </button>
       </div>
     </section>
 
@@ -240,6 +253,9 @@
       <div class="row">
         <span>Tips: Slow pulses, extended breathing 🧘‍♂️</span>
       </div>
+      <div class="row" style="justify-content: flex-start;">
+        <button class="cta-button" onclick="simulateCompleteData()">Check Final Data</button>
+      </div>
     </section>
   </main>
 
@@ -248,9 +264,9 @@
   </footer>
 
   <script>
-    // Function to switch between sections
+    // Switch between sections
     function showSection(sectionId) {
-      const sections = ['homeSection', 'healthSection', 'sessionSection', 'completeSection'];
+      const sections = ['homeSection','healthSection','sessionSection','completeSection'];
       sections.forEach(sec => {
         document.getElementById(sec).classList.add('hidden');
       });
@@ -259,9 +275,9 @@
 
     // Simulate Apple Health Data Sync
     function simulateHealthData() {
-      const heartRate = Math.floor(Math.random() * 40) + 60;
-      const stressLevel = ['Low', 'Moderate', 'High'][Math.floor(Math.random() * 3)];
-      const breathing = Math.floor(Math.random() * 6) + 12;
+      const heartRate = Math.floor(Math.random() * 40) + 60; // 60-100
+      const stressLevel = ['Low','Moderate','High'][Math.floor(Math.random() * 3)];
+      const breathing = Math.floor(Math.random() * 6) + 12;  // 12-18
 
       document.getElementById('heartRate1').innerText = heartRate + ' BPM';
       document.getElementById('stressLevel1').innerText = stressLevel;
@@ -270,9 +286,9 @@
 
     // Simulate Meditation Session Data
     function simulateSessionData() {
-      const heartRate = Math.floor(Math.random() * 40) + 60;
-      const stressLevel = ['Low', 'Moderate', 'High'][Math.floor(Math.random() * 3)];
-      const breathing = Math.floor(Math.random() * 6) + 12;
+      const heartRate = Math.floor(Math.random() * 40) + 60;   
+      const stressLevel = ['Low','Moderate','High'][Math.floor(Math.random() * 3)];
+      const breathing = Math.floor(Math.random() * 6) + 12;    
 
       document.getElementById('heartRate2').innerText = heartRate + ' BPM';
       document.getElementById('stressLevel2').innerText = stressLevel;
@@ -281,8 +297,8 @@
 
     // Simulate Final Data after Session Complete
     function simulateCompleteData() {
-      const heartRate = Math.floor(Math.random() * 40) + 60;
-      const breathing = Math.floor(Math.random() * 6) + 12;
+      const heartRate = Math.floor(Math.random() * 40) + 60;   
+      const breathing = Math.floor(Math.random() * 6) + 12;    
 
       document.getElementById('heartRate3').innerText = heartRate + ' BPM';
       document.getElementById('breathing3').innerText = breathing + ' BPM';
