@@ -52,3 +52,6 @@ The system continuously monitors the user's physiological state and adjusts the 
 
 ## Reference:
 1. https://github.com/yetyeeter1337/p5.Modbuttons
+2. https://github.com/FastLED/FastLED
+3. https://github.com/bblanchon/ArduinoJson
+4. https://github.com/adafruit/Adafruit_NeoPixel
