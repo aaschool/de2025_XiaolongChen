@@ -12,7 +12,7 @@ HTML/CSS/JavaScript: Core technologies for building and styling the web applicat
 Python: For data processing and server-side logic.
 Flask (or similar): To implement HTTP/REST APIs for data communication.
 TouchDesigner: For generating dynamic, immersive visual content.
----
+
 ## Communication Protocols:
 
 BLE (Bluetooth Low Energy): For collecting physiological data from the Apple Watch.
@@ -22,7 +22,7 @@ USB Serial Communication: For sending control commands from the backend to the A
 DMX512: For controlling professional stage or architectural lighting systems.
 HDMI: For delivering high-definition visuals to a projector.
 GPIO/PWM Signals: For managing LED lighting and audio output from the Arduino.
----
+
 ## Hardware:
 
 Apple Watch: To capture real-time physiological data.
