@@ -57,3 +57,6 @@ The system continuously monitors the user's physiological state and adjusts the 
 4. https://github.com/adafruit/Adafruit_NeoPixel
 5. https://github.com/processing/p5.js
 6. https://github.com/LUSHDigital/LushRooms
+7. https://github.com/brianlow/Rotary
+8. https://github.com/p5-serial/p5.serialport
+9. https://github.com/mathertel/DMXSerial
